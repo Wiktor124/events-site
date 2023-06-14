@@ -1,0 +1,20 @@
+{
+  "name": "proyecto1-hoteles-final-lll",
+  "version": "1.0.0",
+  "description": "* Jason Porras\r * Bryan Monge\r * Randy Luna\r * Víctor Peña",
+  "main": "index.js",
+  "scripts": {
+    "sass": "sass --watch styles/sass:styles/css"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Wiktor124/proyecto1-hoteles-final-lll.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Wiktor124/proyecto1-hoteles-final-lll/issues"
+  },
+  "homepage": "https://github.com/Wiktor124/proyecto1-hoteles-final-lll#readme"
+}

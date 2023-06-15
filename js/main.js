@@ -1,3 +1,6 @@
-import fetchData from "./services/api.js";
+import { initTabs } from "./home/tabs.js";
 
-// console.log(await fetchData('sports'));
+window.onload = () => {
+  initTabs();
+}
+

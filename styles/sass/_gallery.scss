@@ -1,0 +1,31 @@
+.main-gallery {
+  overflow: auto;
+  height: 90vh;
+}
+
+.gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 30px;
+  margin-top: 30px;
+
+  &__card {
+    background-color: $white;
+    box-shadow: -1px 0px 5px 0px rgba(0,0,0,0.17);
+    -webkit-box-shadow: -1px 0px 5px 0px rgba(0,0,0,0.17);
+    -moz-box-shadow: -1px 0px 5px 0px rgba(0,0,0,0.17);
+  }
+
+  &__text {
+    padding: 0 10px 10px 10px;
+    font-weight: 500;
+
+    .date {
+      color: $orage;
+    }
+    
+    &>:not(.date):not(h3) {
+      color: #0000009f;
+    }
+  }
+}

@@ -1,0 +1,34 @@
+.header {
+  background-color: $black;
+  padding-top: 20px;
+
+  &__tabs {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+    max-width: 850px;
+    width: 80%;
+    margin: 0 auto;
+  }
+
+  button {
+    padding: 10px 0;
+    font-weight: bold;
+    border: none;
+    background-color: $black;
+    color: $white;
+  }
+
+  button:hover {
+    background-color: $white2;
+    color: $black;
+  }
+
+  button::first-letter {
+    text-transform: uppercase;
+  }
+
+  .active {
+    background-color: $white2;
+    color: $black;
+  }
+}

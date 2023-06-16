@@ -1,3 +1,4 @@
+import { ConnectionError } from '../utils/Errors.js'
 const API_URL = 'https://knassbani2.execute-api.us-east-2.amazonaws.com/events/';
 
 /**
@@ -8,8 +9,11 @@ const API_URL = 'https://knassbani2.execute-api.us-east-2.amazonaws.com/events/'
  * @returns array
  */
 const fetchData = async (category) => {
-  const apiData = await fetch(`${API_URL}/${category}`).then(response => response.json());
-  return apiData;
+  try {
+    return await fetch(`${API_URL}/${category}`).then(response => response.json());
+  } catch {
+    throw new ConnectionError('Something went wrong with fetching data!')
+  }
 }
 
 export default fetchData;

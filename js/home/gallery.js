@@ -2,6 +2,8 @@ import { cacheProxyCategories } from "../services/cache.js";
 import formatDate from "../utils/format-date.js";
 
 function renderGallery(media) {
+  console.log(media);
+  
   document.querySelector('#gallery').innerHTML = media.map(({ image, title, date, location, price }) => {
     const { address, city, state } = location;
     price = Number(price) !== 0 ? `$${price.toFixed(2)}`: 'Free';

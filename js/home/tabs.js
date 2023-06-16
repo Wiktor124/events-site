@@ -1,11 +1,10 @@
 import { getCategory } from "./gallery.js";
+import { tabsCategories } from "../config.js";
 
 const tabsContainer = document.querySelector('#tabs');
 
-function renderTabs() {
-  const categoriesArr = ['music', 'sports', 'business', 'food', 'art'];
-  
-  tabsContainer.innerHTML = categoriesArr.map(category => {
+function renderTabs(categoires) {  
+  tabsContainer.innerHTML = categoires.map(category => {
     return `<button data-category="${category.toLowerCase()}">${category}</button>`
   }).join('');
   
@@ -26,7 +25,7 @@ function handleTabs(e) {
 }
 
 function initTabs() {
-  renderTabs();
+  renderTabs(tabsCategories);
   
   getCategory(tabsContainer.firstChild.dataset.category);
   tabsContainer.addEventListener('click', handleTabs);

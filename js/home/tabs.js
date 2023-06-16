@@ -14,6 +14,8 @@ function renderTabs() {
 
 function handleTabs(e) {
   const target = e.target;
+  if(!target.matches('button')) return;
+  
   const previousTab = tabsContainer.querySelector('.active');
 
   previousTab 

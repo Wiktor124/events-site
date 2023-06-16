@@ -14,12 +14,11 @@ function renderTabs() {
 
 function handleTabs(e) {
   const target = e.target;
-
   const previousTab = tabsContainer.querySelector('.active');
-  if (previousTab) {
-    previousTab.classList.remove('active');
-  }
-  target.classList.add('active');
+
+  previousTab 
+    ? previousTab.classList.remove('active') 
+    : target.classList.add('active');
 
   getCategory(target.dataset.category)
 }
@@ -30,4 +29,4 @@ function initTabs() {
   getCategory(tabsContainer.firstChild.dataset.category);
   tabsContainer.addEventListener('click', handleTabs);
 }
-export { initTabs };
+export default initTabs;

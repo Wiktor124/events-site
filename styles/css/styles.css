@@ -52,6 +52,11 @@ img {
   display: none;
 }
 
+#error {
+  margin-top: 100px;
+  text-align: center;
+}
+
 .header {
   background-color: #000;
   padding-top: 20px;

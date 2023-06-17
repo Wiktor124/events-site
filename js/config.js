@@ -1,4 +1,4 @@
 // This array is used to add categories to tabs
-const tabsCategories = ['sports', 'business', 'food', 'art', 'music', 'car'];
+const tabsCategories = ['music', 'sports', 'business', 'food', 'art'];
 
 export {  tabsCategories };

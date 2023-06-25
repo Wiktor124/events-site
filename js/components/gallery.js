@@ -1,5 +1,6 @@
 import { cacheProxyCategories } from "../services/cache.js";
 import formatDate from "../utils/format-date.js";
+import autoGalleryContainerHeight from "../utils/auto-height-node.js";
 
 function renderGallery(media) {
   document.querySelector('#gallery').innerHTML = media.map(({ image, title, date, location, price }) => {
@@ -18,12 +19,13 @@ function renderGallery(media) {
       </li>
     `
   }).join('');
+  
+  autoGalleryContainerHeight();
 }
 
-async function getCategory(category) {
+async function getTabCategory(category) {
   const content = await cacheProxyCategories[category];
 
   renderGallery(content);
 }
-
-export { getCategory };
+export default getTabCategory;

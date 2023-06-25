@@ -8,16 +8,16 @@ const API_URL = 'https://knassbani2.execute-api.us-east-2.amazonaws.com/events/'
  * @param {fetchData} String
  * @returns array
  */
-const fetchData = async (category) => {
+const fetchEventsByCategories = async (category) => {
   try {
     return await fetch(`${API_URL}/${category}`).then(response => response.json());
     
   } catch {
     const errorMessage = new ConnectionError('Something went wrong with fetching data!');
     errorMessage.renderMessage('Something went wrong 😪.');
-    
+
     throw errorMessage; 
   }
 }
 
-export default fetchData;
+export default fetchEventsByCategories;

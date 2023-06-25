@@ -1,33 +1,32 @@
-import { getCategory } from "./gallery.js";
-import { tabsCategories } from "../config.js";
+import getTabCategory from "./gallery.js";
+const tabsContainer = document.querySelector("#tabs");
 
-const tabsContainer = document.querySelector('#tabs');
+function renderTabs(categoires) {
+  tabsContainer.innerHTML = categoires.map(({ label, category }) => {
+      return `<button data-category="${category.toLowerCase()}">${label}</button>`;
+  }).join("");
 
-function renderTabs(categoires) {  
-  tabsContainer.innerHTML = categoires.map(category => {
-    return `<button data-category="${category.toLowerCase()}">${category}</button>`
-  }).join('');
-  
-  tabsContainer.firstChild.className = 'active';
+  tabsContainer.firstChild.className = "active";
 }
 
 function handleTabs(e) {
   const target = e.target;
-  if(!target.matches('button')) return;
-  
-  const previousTab = tabsContainer.querySelector('.active');
+  if (!target.matches("button")) return;
 
-  previousTab 
-    ? previousTab.classList.remove('active') 
-    : target.classList.add('active');
+  const previousTab = tabsContainer.querySelector(".active");
 
-  getCategory(target.dataset.category)
+  if (previousTab) {
+    previousTab.removeAttribute("class", "active");
+  }
+  target.setAttribute("class", "active");
+
+  getTabCategory(target.dataset.category);
 }
 
-function initTabs() {
-  renderTabs(tabsCategories);
-  
-  getCategory(tabsContainer.firstChild.dataset.category);
-  tabsContainer.addEventListener('click', handleTabs);
+function initTabs(categoiresTabs) {
+  renderTabs(categoiresTabs);
+
+  getTabCategory(tabsContainer.firstChild.dataset.category);
+  tabsContainer.addEventListener("click", handleTabs);
 }
 export default initTabs;

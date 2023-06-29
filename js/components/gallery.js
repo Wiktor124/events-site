@@ -9,23 +9,22 @@ const endPoint = new webkitURL(window.location).pathname.replace(/^\/|\.html$/g,
 
 function generateInteractionsButtons(id, category) {
 
-  if (endPoint !== 'index') {
+  if (endPoint === 'my-account') {
     return `
       <p>Not Going anymore?</p>
       <button data-id="${id}" data-interaction="${category}">Remove</button>
     `;
   }
 
- 
-   const { favorites, interested, going } = interactionsCategories;
+  const { favorites, interested, going } = interactionsCategories;
     
-    return `
-      <button data-id="${id}" data-interaction="${interested}">Interested</button>
-      <button data-id="${id}" data-interaction="${going}">Going!</button>
-      <button class="heart heart-btn" data-id="${id}" data-interaction="${favorites}">
-        <img src="./assets/icons/heart.svg" data-id="${id}" data-interaction="${favorites}" class="heart-img"/>
-      </button>
-    `;
+  return `
+    <button data-id="${id}" data-interaction="${interested}">Interested</button>
+    <button data-id="${id}" data-interaction="${going}">Going!</button>
+    <button class="heart heart-btn" data-id="${id}" data-interaction="${favorites}">
+      <img src="./assets/icons/heart.svg" data-id="${id}" data-interaction="${favorites}" class="heart-img"/>
+    </button>
+  `;
 }
 
 function renderGallery({ data, category}) {

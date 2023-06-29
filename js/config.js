@@ -1,4 +1,6 @@
 // These array are used to add categories to tabs
+
+// Home
 const homeTabs = [
   {
     label: "Music",
@@ -22,23 +24,34 @@ const homeTabs = [
   },
 ];
 
+// Interactions
+const interactionsCategories = {
+  going: "going",
+  interested: "interested",
+  favorites: "favorites",
+};
+
 const interactionsTabs = [
   {
-    label: "Music",
-    category: "music",
+    label: "Favorites",
+    category: interactionsCategories.favorites
   },
   {
-    label: "Sports",
-    category: "sports",
+    label: "Interested",
+    category: interactionsCategories.interested,
   },
   {
-    label: "Business",
-    category: "business",
-  },
-  {
-    label: "Food",
-    category: "food",
-  },
+    label: "Going",
+    category: interactionsCategories.going,
+  }
 ];
 
-export { homeTabs, interactionsTabs };
+
+const defaultFlag = false;
+const interactionFlag = {
+  heart: defaultFlag,
+  interested: defaultFlag,
+  going: defaultFlag
+}
+
+export { homeTabs, interactionsTabs, interactionsCategories };

@@ -14,13 +14,39 @@
   &__text {
     padding: 0 10px 10px 10px;
     font-weight: 500;
+    position: relative;
+
+    h3 {
+      margin-top: 30px;
+    }
 
     .date {
       color: $orage;
     }
 
-    &>:not(.date):not(h3) {
+    & > :not(.date):not(h3) {
       color: #0000009f;
     }
+  }
+}
+
+.heart {
+  background-color: $white;
+  padding: 8px;
+  border-radius: 100%;
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  top: -55px;
+  right: 20px;
+  border: 0.1px solid #eae9ee;
+
+  img {
+    clip-path: path(
+      "M12 4.248c-3.148-5.402-12-3.825-12 2.944 0 4.661 5.571 9.427 12 15.808 6.43-6.381 12-11.147 12-15.808 0-6.792-8.875-8.306-12-2.944z"
+    );
+    width: 24px;
+    height: 24px;
+    border-radius: 40%;
   }
 }

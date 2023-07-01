@@ -9,9 +9,7 @@ const appInteractions = {
   setState(interactionKey, data) {
     const currentState = this.getState();
     const existingCategory = currentState[interactionKey] || [];
-    const isDuplicate = existingCategory.some((item) => item.id === data.id);
-    console.log(data);
-    console.log(isDuplicate);
+    existingCategory.some((item) => item.id === data.id);
 
     if (interactionKey === interactionsCategories.favorites) {
       if (isDuplicate) {
@@ -19,10 +17,10 @@ const appInteractions = {
 
         existingCategory.splice(index, 1);
       } else {
-        existingCategory.push(data);
+        existingCategory.push({ interaction: interactionKey, ...data});
       }
     } else if (!isDuplicate) {
-      existingCategory.push(data);
+      existingCategory.push({ interaction: interactionKey, ...data});
 
       const interactionsSwitch = {
         going: interactionsCategories.interested,

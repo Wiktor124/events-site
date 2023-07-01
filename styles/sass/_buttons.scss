@@ -1,0 +1,33 @@
+@mixin buttons($bgk, $color) {
+  background-color: $bgk;
+  font-size: 15px;
+  color: $color;
+  font-weight: bold;
+  border-radius: 6px;
+  padding: 5px 12px;
+  margin-top: 15px;
+  border: 2px solid $blue;
+}
+
+.interactions-container {
+  // display: flex;
+  // gap: 10px;
+}
+
+.interested {
+  @include buttons($white, $blue)
+}
+
+.going {
+  @include buttons($blue, $white)
+}
+
+.default {
+  background: none;
+  border: none;
+  color: $blue;
+  text-decoration: underline;
+  cursor: pointer;
+  padding: 0;
+
+}

@@ -1,66 +1,90 @@
 import formatDate from "../utils/format-date.js";
 import autoGalleryContainerHeight from "../utils/auto-height-node.js";
 import appInteractions from "../interactions/singleton.js";
-import { interactionsCategories } from "../config.js";
 import dynamic from "../utils/dynamic-data.js";
+import { generateInteractionsButtons, templates } from "./gallery-templates.js";
+import { interactionsCategories } from "../config.js";
 
 const galleryContainer = document.querySelector("#gallery");
-const endPoint = new webkitURL(window.location).pathname.replace(/^\/|\.html$/g,"");
-
-function generateInteractionsButtons(id, category) {
-
-  if (endPoint === 'my-account') {
-    return `
-      <p>Not Going anymore?</p>
-      <button data-id="${id}" data-interaction="${category}">Remove</button>
-    `;
-  }
-
-  const { favorites, interested, going } = interactionsCategories;
-    
-  return `
-    <button data-id="${id}" data-interaction="${interested}">Interested</button>
-    <button data-id="${id}" data-interaction="${going}">Going!</button>
-    <button class="heart heart-btn" data-id="${id}" data-interaction="${favorites}">
-      <img src="./assets/icons/heart.svg" data-id="${id}" data-interaction="${favorites}" class="heart-img"/>
-    </button>
-  `;
-}
 
 function renderGallery({ data, category}) {
-  
+  let interactionKey;
+  let eventId;
+
+  console.log(data);
   galleryContainer.innerHTML = data
-    ?.map(({ id, image, title, date, location, price }) => {
-      const { address, city, state } = location;
+    ?.map(({ interaction, id, image, title, date, location:  { address, city, state }, price }) => {
       price = Number(price) !== 0 ? `$${price.toFixed(2)}` : "Free";
+      interactionKey =  interaction;
+      eventId = id;
+      
 
       return `
       <li class="gallery__card">
         <img src="${image}" alt="${title}"/>
         <div class="gallery__text">
-          <h3>${title}</h3>
-          <p class="date">${formatDate(new Date(date))}.</p>
-          <p>${address} • ${city}, ${state}.</p>
-          <strong>${price}</strong>
-          <div class="interactions-container">${generateInteractionsButtons(id, category)}</div>
+          <div class="event__info">
+            <h3>${title}</h3>
+            <p class="date">${formatDate(new Date(date))}.</p>
+            <p>${address} • ${city}, ${state}.</p>
+            <strong>${price}</strong>
+          </div>
+          <div class="interactions-container" data-id="${id}">${generateInteractionsButtons(interaction, id, category)}</div>
         </div>
       </li>
     `;
-    })
-    .join("");
+  }).join("");
   autoGalleryContainerHeight();
+
+  const appState = JSON.parse(localStorage.getItem('appState')) || [];
+  const arregloUnido = [].concat(...Object.values(appState))
+  // console.table(arregloUnido);
+  const interactionsContainer = document.querySelectorAll('.interactions-container')
+  const hearts = document.querySelectorAll('.heart')
+  const { favorites } = interactionsCategories;
+
+  
+  const test = data.find((item, i) => {
+    const eventId = arregloUnido[i]?.id;
+    return eventId && eventId.toString() === item.id.toString();
+  });
+  console.log(test);
+
+  
 }
+
 
 let content;
 function handleInteractions(e) {
-  if (!e.target.matches("button") && !e.target.matches("img")) return;
+  if (!e.target.matches("button")) return;
   const target = e.target;
+  console.log(target);
   const { id, interaction } = e.target.dataset;
+  const { going, interested, removeThis } = interactionsCategories;
+  appInteractions.setState(interaction, content.find((event) => event.id === id));
 
-  appInteractions.setState(
-    interaction,
-    content.find((event) => event.id === id)
-  );
+  
+  if(target.matches('.heart')) {
+    target.classList.toggle('heart-blue');
+  }
+  
+  document.querySelectorAll('.interactions-container').forEach(item => {
+    if (item.dataset.id === id) {
+      const container = item.querySelector('.going-and-interested');
+
+      const interactionFunctions = {
+        going: templates.going,
+        interested: templates.interested
+      };
+
+      container.innerHTML = interactionFunctions[interaction] 
+      ? interactionFunctions[interaction](id, interaction)
+      : templates.intitial(id);
+
+      
+    }
+  });
+  
 }
 
 async function getTabCategory(category) {

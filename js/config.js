@@ -29,6 +29,8 @@ const interactionsCategories = {
   going: "going",
   interested: "interested",
   favorites: "favorites",
+  calendar: "calendar",
+  removeThis: "remove"
 };
 
 const interactionsTabs = [
@@ -43,15 +45,37 @@ const interactionsTabs = [
   {
     label: "Going",
     category: interactionsCategories.going,
+  },
+  {
+    label: "Calendar",
+    category: interactionsCategories.calendar,
   }
 ];
 
-
-const defaultFlag = false;
-const interactionFlag = {
-  heart: defaultFlag,
-  interested: defaultFlag,
-  going: defaultFlag
+const saludos = {
+  saludo: [
+    {
+      pollo: "chick"
+    },
+    {
+      cerdo: "cerd"
+    }
+  ],
+  despedida: [
+    {
+      pollo: "chfasick"
+    },
+    {
+      cerdo: "ve"
+    }
+  ],
+  arroz: [
+    {
+      pollo: "chick"
+    },
+    {
+      cerdo: "cerd"
+    }
+  ]
 }
-
 export { homeTabs, interactionsTabs, interactionsCategories };

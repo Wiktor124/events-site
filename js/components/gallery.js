@@ -7,17 +7,12 @@ import { interactionsCategories } from "../config.js";
 
 const galleryContainer = document.querySelector("#gallery");
 
-function renderGallery({ data, category}) {
-  let interactionKey;
-  let eventId;
+function renderGallery({ data = [], category }) {
 
   console.log(data);
   galleryContainer.innerHTML = data
-    ?.map(({ interaction, id, image, title, date, location:  { address, city, state }, price }) => {
+    ?.map(({ interaction, id, image, title, date, location: { address, city, state }, price }) => {
       price = Number(price) !== 0 ? `$${price.toFixed(2)}` : "Free";
-      interactionKey =  interaction;
-      eventId = id;
-      
 
       return `
       <li class="gallery__card">
@@ -33,65 +28,58 @@ function renderGallery({ data, category}) {
         </div>
       </li>
     `;
-  }).join("");
+    }).join("");
   autoGalleryContainerHeight();
 
   const appState = JSON.parse(localStorage.getItem('appState')) || [];
   const arregloUnido = [].concat(...Object.values(appState))
-  // console.table(arregloUnido);
-  const interactionsContainer = document.querySelectorAll('.interactions-container')
-  const hearts = document.querySelectorAll('.heart')
-  const { favorites } = interactionsCategories;
 
-  
-  const test = data.find((item, i) => {
-    const eventId = arregloUnido[i]?.id;
-    return eventId && eventId.toString() === item.id.toString();
-  });
-  console.log(test);
-
-  
 }
 
 
 let content;
-function handleInteractions(e) {
+function handleInteractions(e, category) {
   if (!e.target.matches("button")) return;
-  const target = e.target;
-  console.log(target);
-  const { id, interaction } = e.target.dataset;
-  const { going, interested, removeThis } = interactionsCategories;
-  appInteractions.setState(interaction, content.find((event) => event.id === id));
 
-  
-  if(target.matches('.heart')) {
+  const target = e.target;
+  const { id, interaction, template } = e.target.dataset;
+  const { going, interested, remove, favorites } = interactionsCategories;
+
+  if (target.matches('.heart')) {
     target.classList.toggle('heart-blue');
+    target.classList.toggle(remove);
+    appInteractions.setState(interaction, content.find(event => event.id === id));
   }
   
-  document.querySelectorAll('.interactions-container').forEach(item => {
-    if (item.dataset.id === id) {
-      const container = item.querySelector('.going-and-interested');
 
-      const interactionFunctions = {
-        going: templates.going,
-        interested: templates.interested
-      };
+  // if(target.matches(`.${remove}`)) {
+ 
+  // }
 
-      container.innerHTML = interactionFunctions[interaction] 
-      ? interactionFunctions[interaction](id, interaction)
-      : templates.intitial(id);
-
-      
-    }
-  });
+  const container = document.querySelector(`.interactions-container[data-id="${id}"] .going-and-interested`);
+  const interactionFunctions = {
+    going: templates.going,
+    interested: templates.interested
+  };
   
+  container.innerHTML = interactionFunctions[template]
+  ? interactionFunctions[template](id, interaction) : templates.intitial(id);
+  
+  appInteractions.setState(interaction, content.find(event => event.id === id));
+
+  if(template === remove || target.matches(`.${remove}`)) {
+    appInteractions.removeInteraction(interaction, id)
+  }
 }
 
+
+
+
 async function getTabCategory(category) {
-  const data = await dynamic.getState().events[category];
+  const data = await dynamic.getState().events?.[category];
   content = data;
 
-  galleryContainer.addEventListener("click", handleInteractions);
+  galleryContainer.addEventListener("click", (e) => handleInteractions(e, category));
   renderGallery({ data, category });
 }
 

@@ -30,7 +30,7 @@ const interactionsCategories = {
   interested: "interested",
   favorites: "favorites",
   calendar: "calendar",
-  removeThis: "remove"
+  remove: "remove"
 };
 
 const interactionsTabs = [
@@ -51,31 +51,4 @@ const interactionsTabs = [
     category: interactionsCategories.calendar,
   }
 ];
-
-const saludos = {
-  saludo: [
-    {
-      pollo: "chick"
-    },
-    {
-      cerdo: "cerd"
-    }
-  ],
-  despedida: [
-    {
-      pollo: "chfasick"
-    },
-    {
-      cerdo: "ve"
-    }
-  ],
-  arroz: [
-    {
-      pollo: "chick"
-    },
-    {
-      cerdo: "cerd"
-    }
-  ]
-}
 export { homeTabs, interactionsTabs, interactionsCategories };

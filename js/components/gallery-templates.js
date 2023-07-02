@@ -1,7 +1,7 @@
 import { interactionsCategories } from "../config.js";
 
 const endPoint = new webkitURL(window.location).pathname.replace(/^\/|\.html$/g, "");
-const { favorites, interested, going, removeThis } = interactionsCategories;
+const { favorites, interested, going, remove } = interactionsCategories;
 
 const templates = {
   going: (id) =>{
@@ -10,7 +10,7 @@ const templates = {
 
       <div>
         <p>You're going to this event!.</p>
-        <button data-id="${id}" class="default ${removeThis}">Changed your mind?</button>
+        <button data-id="${id}" data-interaction="${going}" data-template="${remove}" class="default">Changed your mind?</button>
       </div>
     `;
   },
@@ -19,19 +19,19 @@ const templates = {
     return `
       <div>
         <p>You're interested in going.</p>
-        <button data-id="${id}" class="default">Changed your mind?</button>
+        <button data-id="${id}" data-interaction="${interested}"  data-template="${remove}" class="default">Changed your mind?</button>
       </div>
-      <button class="going" data-id="${id}" data-interaction="${going}">Going!</button>
+      <button data-id="${id}" data-interaction="${going}" data-template="${going}"  class="going">Going!</button>
     `;
   },
 
   intitial(id) {
     return `
       <div class="going-and-interested" data-id="${id}">
-        <button class="going" data-id="${id}" data-interaction="${going}">Going!</button>
-        <button class="interested" data-id="${id}" data-interaction="${interested}">Interested</button>
+        <button class="going" data-id="${id}" data-interaction="${going}" data-template="${going}">Going!</button>
+        <button class="interested" data-id="${id}" data-interaction="${interested}" data-template="${interested}">Interested</button>
       </div>
-      <button class="heart" data-id="${id}" data-interaction="${favorites}"></button>
+      <button data-id="${id}" data-interaction="${favorites}"  class="heart ${remove}"></button>
     `;
   }
 };
@@ -40,7 +40,7 @@ function generateInteractionsButtons(interaction, id, category) {
   if (endPoint === "account") {
     return `
       <p>Not ${interaction} anymore?</p>
-      <button data-id="${id}" data-interaction="${category}">Remove</button>
+      <button data-id="${id}" data-interaction="${category}" class="default ${remove}">Remove</button>
     `;
   }
 

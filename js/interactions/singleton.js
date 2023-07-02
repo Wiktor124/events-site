@@ -9,35 +9,37 @@ const appInteractions = {
   setState(interactionKey, data) {
     const currentState = this.getState();
     const existingCategory = currentState[interactionKey] || [];
-    existingCategory.some((item) => item.id === data.id);
+    const duplicated = existingCategory.some((item) => item.id === data.id);
+    if(duplicated) return;
 
-    if (interactionKey === interactionsCategories.favorites) {
-      if (isDuplicate) {
-        const index = existingCategory.findIndex((item) => item.id === data.id);
+    existingCategory.push({ interaction: interactionKey, ...data });
 
-        existingCategory.splice(index, 1);
-      } else {
-        existingCategory.push({ interaction: interactionKey, ...data});
-      }
-    } else if (!isDuplicate) {
-      existingCategory.push({ interaction: interactionKey, ...data});
+    const interactionsSwitch = {
+      going: interactionsCategories.interested,
+      interested: interactionsCategories.going,
+    }[interactionKey];
 
-      const interactionsSwitch = {
-        going: interactionsCategories.interested,
-        interested: interactionsCategories.going,
-      }[interactionKey];
+    const index = currentState[interactionsSwitch]?.findIndex((item) => item.id === data.id);
 
-      const index = currentState[interactionsSwitch]?.findIndex((item) => item.id === data.id);
-
-      if (index > -1) {
-        currentState[interactionsSwitch].splice(index, 1);
-      }
+    if (index > -1) {
+      currentState[interactionsSwitch].splice(index, 1);
     }
 
     currentState[interactionKey] = existingCategory;
     state = { ...this.getState(), ...currentState };
     localStorage.setItem("appState", JSON.stringify(state));
   },
+  removeInteraction(interactionKey, id) {
+    const currentState = this.getState();
+    const existingCategory = currentState[interactionKey] || [];
+  
+    const index = existingCategory.findIndex(item => item.id === id);
+    existingCategory.splice(index, 1);
+  
+    state = { ...this.getState(), ...currentState };
+    localStorage.setItem("appState", JSON.stringify(state));
+  }
+  
 };
 Object.freeze(appInteractions);
 

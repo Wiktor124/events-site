@@ -31,7 +31,7 @@ const templates = {
         <button class="going" data-id="${id}" data-interaction="${going}" data-template="${going}">Going!</button>
         <button class="interested" data-id="${id}" data-interaction="${interested}" data-template="${interested}">Interested</button>
       </div>
-      <button data-id="${id}" data-interaction="${favorites}"  class="heart ${remove}"></button>
+      <button data-id="${id}" data-interaction="${favorites}"  class="heart"></button>
     `;
   }
 };

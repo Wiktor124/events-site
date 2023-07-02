@@ -7,7 +7,7 @@ import { interactionsCategories } from "../config.js";
 
 const galleryContainer = document.querySelector("#gallery");
 
-function renderGallery({ data = [], category }) {
+function renderGallery({ data, category }) {
 
   console.log(data);
   galleryContainer.innerHTML = data
@@ -44,11 +44,12 @@ function handleInteractions(e, category) {
   const target = e.target;
   const { id, interaction, template } = e.target.dataset;
   const { going, interested, remove, favorites } = interactionsCategories;
+  appInteractions.setState(interaction, content.find(event => event.id === id));
 
+
+  // appInteractions.setState(interaction, content.find(event => event.id === id));
   if (target.matches('.heart')) {
     target.classList.toggle('heart-blue');
-    target.classList.toggle(remove);
-    appInteractions.setState(interaction, content.find(event => event.id === id));
   }
   
 
@@ -56,20 +57,39 @@ function handleInteractions(e, category) {
  
   // }
 
-  const container = document.querySelector(`.interactions-container[data-id="${id}"] .going-and-interested`);
-  const interactionFunctions = {
-    going: templates.going,
-    interested: templates.interested
-  };
-  
-  container.innerHTML = interactionFunctions[template]
-  ? interactionFunctions[template](id, interaction) : templates.intitial(id);
-  
-  appInteractions.setState(interaction, content.find(event => event.id === id));
+  // document.querySelectorAll('.interactions-container').forEach(item => {
+  //   if (item.dataset.id === id) {
+  //     const container = item.querySelector('.going-and-interested');
 
-  if(template === remove || target.matches(`.${remove}`)) {
-    appInteractions.removeInteraction(interaction, id)
+  //     const interactionFunctions = {
+  //       going: templates.going,
+  //       interested: templates.interested
+  //     };
+
+  //     container.innerHTML = interactionFunctions[interaction] 
+  //     ? interactionFunctions[interaction](id, interaction)
+  //     : templates.intitial(id);
+
+
+  //   }
+  // });
+
+
+  if(!target.matches('.heart') || !target.matches(`.${remove}`)) {
+    const container = document.querySelector(`.interactions-container[data-id="${id}"] .going-and-interested`);
+    const interactionFunctions = {
+      going: templates.going,
+      interested: templates.interested
+    };
+    
+    container.innerHTML = interactionFunctions?.[template]
+    ? interactionFunctions?.[template](id, interaction) : templates.intitial(id);
   }
+  
+
+  // if(template === remove || target.matches(`.${remove}`)) {
+  //   appInteractions.removeInteraction(interaction, id)
+  // }
 }
 
 

@@ -9,37 +9,32 @@ const appInteractions = {
   setState(interactionKey, data) {
     const currentState = this.getState();
     const existingCategory = currentState[interactionKey] || [];
-    const duplicated = existingCategory.some((item) => item.id === data.id);
-    if(duplicated) return;
+    const isDuplicate = existingCategory.some((item) => item.id === data.id);
+    console.log(data);
 
-    existingCategory.push({ interaction: interactionKey, ...data });
+    if (isDuplicate) {
+      const index = existingCategory.findIndex((item) => item.id === data.id);
 
-    const interactionsSwitch = {
-      going: interactionsCategories.interested,
-      interested: interactionsCategories.going,
-    }[interactionKey];
+      existingCategory.splice(index, 1);
+    } else {
+      existingCategory.push({ interaction: interactionKey, ...data });
 
-    const index = currentState[interactionsSwitch]?.findIndex((item) => item.id === data.id);
+      const interactionsSwitch = {
+        going: interactionsCategories.interested,
+        interested: interactionsCategories.going,
+      }[interactionKey];
 
-    if (index > -1) {
-      currentState[interactionsSwitch].splice(index, 1);
+      const index = currentState[interactionsSwitch]?.findIndex((item) => item.id === data.id);
+
+      if (index > -1) {
+        currentState[interactionsSwitch].splice(index, 1);
+      }
     }
-
+    
     currentState[interactionKey] = existingCategory;
     state = { ...this.getState(), ...currentState };
     localStorage.setItem("appState", JSON.stringify(state));
-  },
-  removeInteraction(interactionKey, id) {
-    const currentState = this.getState();
-    const existingCategory = currentState[interactionKey] || [];
-  
-    const index = existingCategory.findIndex(item => item.id === id);
-    existingCategory.splice(index, 1);
-  
-    state = { ...this.getState(), ...currentState };
-    localStorage.setItem("appState", JSON.stringify(state));
   }
-  
 };
 Object.freeze(appInteractions);
 

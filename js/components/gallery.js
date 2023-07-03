@@ -4,12 +4,49 @@ import appInteractions from "../interactions/singleton.js";
 import dynamic from "../utils/dynamic-data.js";
 import { generateInteractionsButtons, templates } from "./gallery-templates.js";
 
+const appState = JSON.parse(localStorage.getItem('appState')) || [];
 const galleryContainer = document.querySelector("#gallery");
+const galleryHome = document.querySelector('.home-gallery');
+const interactionFunctions = {
+  going: templates.going,
+  interested: templates.interested
+};
 
-function renderGallery({ data, category}) {
-  console.log(data);
+function handleInteraction() {
+  const appStateJoined = [].concat(...Object.values(appState))
+
+  const container = document.querySelectorAll('.going-and-interested')
+  const favoriteButton = document.querySelectorAll('.heart');
+
+  if (!galleryHome && container.length <= 0 && appStateJoined.length <= 0) return;
+
+  for (let i = 0; i < container.length; i++) {
+
+    for (let j = 0; j < appStateJoined.length; j++) {
+      const id = appStateJoined[j]?.id;
+
+      if (container[i]?.dataset.id === id) {
+        const interaction = appStateJoined[j]?.interaction;
+
+        if (interaction === 'favorites') {
+          favoriteButton[i].classList.toggle('heart-blue')
+        }
+
+        if (interaction !== 'favorites') {
+          const key = appStateJoined[j]?.interaction;
+
+          container[i].innerHTML = interactionFunctions?.[key]
+            ? interactionFunctions?.[key](id) : templates.intitial(id);
+        }
+      }
+    }
+  }
+}
+
+function renderGallery({ data = [], category = '' }) {
+
   galleryContainer.innerHTML = data
-    ?.map(({ interaction, id, image, title, date, location:  { address, city, state }, price }) => {
+    ?.map(({ interaction, id, image, title, date, location: { address, city, state }, price }) => {
       price = Number(price) !== 0 ? `$${price.toFixed(2)}` : "Free";
 
       return `
@@ -26,45 +63,44 @@ function renderGallery({ data, category}) {
         </div>
       </li>
     `;
-  }).join("");
-  autoGalleryContainerHeight();
+    }).join("");
 
-  const appState = JSON.parse(localStorage.getItem('appState')) || [];
-  const arregloUnido = [].concat(...Object.values(appState))  
+  handleInteraction()
+  autoGalleryContainerHeight();
 }
 
-let content;
-function handleInteractions(e) {
+const eventsData = {}
+function handleInteractionsButton(e) {
   if (!e.target.matches("button")) return;
+  const { content, category } = eventsData;
   const target = e.target;
   const { id, interaction, template } = e.target.dataset;
   appInteractions.setState(interaction, content.find((event) => event.id === id));
 
-  if(target.matches('.heart')) {
+  if (target.matches('.heart')) {
     target.classList.toggle('heart-blue');
   }
-  
-  document.querySelectorAll('.interactions-container').forEach(item => {
-    if (item.dataset.id === id) {
-      const container = item.querySelector('.going-and-interested');
 
-      const interactionFunctions = {
-        going: templates.going,
-        interested: templates.interested
-      };
+  if (!target.matches('.heart') && !target.matches(`.remove`)) {
+    const container = document.querySelector(`.interactions-container[data-id="${id}"] .going-and-interested`);
 
-      container.innerHTML = interactionFunctions[template] 
-      ? interactionFunctions[template](id, interaction)
-      : templates.intitial(id); 
-    }
-  });
+    container.innerHTML = interactionFunctions[template]
+      ? interactionFunctions[template](id) : templates.intitial(id);
+  }
+
+  if(target.matches('.remove') && !galleryHome) {
+    const data = appInteractions.getState()[category]
+    
+    renderGallery({ data, category })
+  }
 }
 
 async function getTabCategory(category) {
-  const data = await dynamic.getState().events[category];
-  content = data;
+  const data = await dynamic.getState().events?.[category];
+  eventsData['content'] = data;
+  eventsData['category'] = category;
 
-  galleryContainer.addEventListener("click", handleInteractions);
+  galleryContainer.addEventListener("click", handleInteractionsButton);
   renderGallery({ data, category });
 }
 

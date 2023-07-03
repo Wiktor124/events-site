@@ -8,10 +8,10 @@ const templates = {
     return `
     <span class="check">✔</span>
 
-      <div>
-        <p>You're going to this event!.</p>
-        <button data-id="${id}" data-interaction="${going}"  data-template="${remove}" class="${remove}">Changed your mind?</button>
-      </div>
+    <div>
+      <p>You're going to this event!.</p>
+      <button data-id="${id}" data-interaction="${going}"  data-template="${remove}" class="button-link">Changed your mind?</button>
+    </div>
     `;
   },
 
@@ -19,9 +19,9 @@ const templates = {
     return `
       <div>
         <p>You're interested in going.</p>
-        <button data-id="${id}" data-interaction="${interested}" data-template="${remove}" class="${remove}">Changed your mind?</button>
+        <button data-id="${id}" data-interaction="${interested}" data-template="${remove}" class="button-link">Changed your mind?</button>
       </div>
-      <button class="going" data-id="${id}" data-interaction="${going}">Going!</button>
+      <button class="going" data-id="${id}" data-interaction="${going}" data-template="${going}">Going!</button>
     `;
   },
 
@@ -39,13 +39,15 @@ const templates = {
 function generateInteractionsButtons(interaction, id, category) {
   if (endPoint === "account") {
     return `
-      <p>Not ${interaction} anymore?</p>
-      <button data-id="${id}" data-interaction="${category}" class="${remove}">Remove</button>
+      <p>
+        Not ${interaction} anymore?
+        <button data-id="${id}" data-interaction="${category}" class="button-link ${remove}">Remove</button>
+      </p>
+      
     `;
   }
-
+  
   return templates.intitial(id);
 }
 
-
-export { generateInteractionsButtons, templates };
+export { generateInteractionsButtons, templates, };

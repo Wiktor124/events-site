@@ -144,7 +144,12 @@ img {
 .gallery .check {
   border-radius: 50%;
   background-color: green;
+  padding: 0 2.5px;
   color: #fff;
+  text-align: justify;
+}
+.gallery .check + div {
+  display: inline-block;
 }
 
 .heart {
@@ -193,7 +198,7 @@ img {
   border: 2px solid #1192ae;
 }
 
-.default {
+.button-link {
   background: none;
   border: none;
   color: #1192ae;

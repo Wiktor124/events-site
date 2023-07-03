@@ -9,11 +9,6 @@
   border: 2px solid $blue;
 }
 
-.interactions-container {
-  // display: flex;
-  // gap: 10px;
-}
-
 .interested {
   @include buttons($white, $blue)
 }
@@ -22,12 +17,11 @@
   @include buttons($blue, $white)
 }
 
-.default {
+.button-link {
   background: none;
   border: none;
   color: $blue;
   text-decoration: underline;
   cursor: pointer;
   padding: 0;
-
 }

@@ -1,26 +1,86 @@
 .gallery {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(200px, .5fr));
+  place-content: center;
   gap: 30px;
   margin-top: 30px;
+  padding-bottom: 30px;
 
   &__card {
     background-color: $white;
     box-shadow: -1px 0px 5px 0px rgba(0, 0, 0, 0.17);
     -webkit-box-shadow: -1px 0px 5px 0px rgba(0, 0, 0, 0.17);
     -moz-box-shadow: -1px 0px 5px 0px rgba(0, 0, 0, 0.17);
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    transition: all 3s;
   }
 
   &__text {
     padding: 0 10px 10px 10px;
     font-weight: 500;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+
+    h3 {
+      margin-top: 30px;
+    }
 
     .date {
       color: $orage;
     }
 
-    &>:not(.date):not(h3) {
+    & > :not(.date):not(h3) {
       color: #0000009f;
     }
   }
+
+  .event__info {
+    flex-grow: 3 !important;
+  }
+
+  .check {
+    // display: inline-block;
+    border-radius: 50%;
+    background-color: green;
+    padding: 0 2.5px;
+    color: $white;
+    text-align: justify;
+
+  }
+
+  .check + div {
+    display: inline-block;
+  }
+}
+
+$size: 55px;
+
+.heart{
+  position: absolute;
+  // top: -55px;
+  top: -25px;
+  right: 20px;
+  width: $size;
+  height: $size;
+  display: block;
+  border-radius: 50%;
+  border: 1px solid #e6e5ea;
+  background: url('../../assets/icons/heart.svg') no-repeat center;
+  background-color: $white;
+  background-size: 45%;
+  width: calc($size - 15px);
+  height: calc($size - 15px);
+
+}
+
+.heart-blue {
+  background: url('../../assets/icons/heart-blue.svg')  no-repeat center;
+  background-color: $white;
+  background-size: 45%;
+  width: calc($size - 15px);
+  height: calc($size - 15px);
 }

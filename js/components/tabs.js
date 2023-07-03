@@ -1,4 +1,4 @@
-import getTabCategory from "./gallery.js";
+import { getTabCategory } from "./gallery.js";
 const tabsContainer = document.querySelector("#tabs");
 
 function renderTabs(categoires) {
@@ -21,11 +21,12 @@ function handleTabs(e) {
   target.setAttribute("class", "active");
 
   getTabCategory(target.dataset.category);
+
 }
 
 function initTabs(categoiresTabs) {
   renderTabs(categoiresTabs);
-
+  
   getTabCategory(tabsContainer.firstChild.dataset.category);
   tabsContainer.addEventListener("click", handleTabs);
 }

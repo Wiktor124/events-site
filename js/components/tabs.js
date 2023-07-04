@@ -1,9 +1,18 @@
 import { getTabCategory } from "./gallery.js";
+import { interactionsCategories } from "../config.js";
 const tabsContainer = document.querySelector("#tabs");
+const mainContainer = document.querySelector('.main-container');
+
+const gallery = document.createElement('ul');
+gallery.setAttribute('id', 'gallery')
+gallery.className = 'container error-container gallery home-gallery'
+
+const calendarContainer = document.createElement('div')
+calendarContainer.textContent = 'Soy calendar'
 
 function renderTabs(categoires) {
   tabsContainer.innerHTML = categoires.map(({ label, category }) => {
-      return `<button data-category="${category.toLowerCase()}">${label}</button>`;
+    return `<button data-category="${category.toLowerCase()}">${label}</button>`;
   }).join("");
 
   tabsContainer.firstChild.className = "active";
@@ -11,6 +20,7 @@ function renderTabs(categoires) {
 
 function handleTabs(e) {
   const target = e.target;
+  const category = e.target.dataset.category;
   if (!target.matches("button")) return;
 
   const previousTab = tabsContainer.querySelector(".active");
@@ -20,14 +30,23 @@ function handleTabs(e) {
   }
   target.setAttribute("class", "active");
 
-  getTabCategory(target.dataset.category);
-
+  if(category === interactionsCategories.calendar) {
+    mainContainer.innerHTML = calendarContainer.outerHTML;
+  } else {
+    getTabCategory(category);
+    mainContainer.innerHTML = gallery.outerHTML;
+  }
 }
 
 function initTabs(categoiresTabs) {
   renderTabs(categoiresTabs);
-  
-  getTabCategory(tabsContainer.firstChild.dataset.category);
-  tabsContainer.addEventListener("click", handleTabs);
+  const category = tabsContainer.firstChild?.dataset.category;
+
+  if (category !== interactionsCategories.calendar) {
+    mainContainer.innerHTML = gallery.outerHTML;
+    tabsContainer.addEventListener("click", handleTabs);
+
+    getTabCategory(tabsContainer.firstChild.dataset.category);
+  }
 }
 export default initTabs;

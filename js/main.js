@@ -1,6 +1,6 @@
 import { homeTabs } from "./config.js";
 import initTabs from "./components/tabs.js";
-import dynamic from "./utils/dynamic-data.js";
+import dynamic from "./patterns/dynamic-data.js";
 import { cacheProxyCategories } from "./services/cache.js";
 
 

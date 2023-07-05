@@ -1,11 +1,10 @@
 import formatDate from "../utils/format-date.js";
 import autoGalleryContainerHeight from "../utils/auto-height-node.js";
-import appInteractions from "../interactions/singleton.js";
-import dynamic from "../utils/dynamic-data.js";
+import appInteractions from "../patterns/singleton.js";
+import dynamic from "../patterns/dynamic-data.js";
 import { generateInteractionsButtons, templates } from "./gallery-templates.js";
 
 const appState = JSON.parse(localStorage.getItem('appState')) || [];
-const galleryContainer = document.querySelector("#gallery");
 const galleryHome = document.querySelector('.home-gallery');
 const interactionFunctions = {
   going: templates.going,
@@ -13,6 +12,7 @@ const interactionFunctions = {
 };
 
 function handleInteraction() {
+
   const appStateJoined = [].concat(...Object.values(appState))
 
   const container = document.querySelectorAll('.going-and-interested')
@@ -43,7 +43,10 @@ function handleInteraction() {
   }
 }
 
+let galleryContainer;
 function renderGallery({ data = [], category = '' }) {
+
+  if (data.length === 0) return galleryContainer.innerHTML = `<li>There's nothig to show in ${category}</li>`;
 
   galleryContainer.innerHTML = data
     ?.map(({ interaction, id, image, title, date, location: { address, city, state }, price }) => {
@@ -71,10 +74,13 @@ function renderGallery({ data = [], category = '' }) {
 
 const eventsData = {}
 function handleInteractionsButton(e) {
-  if (!e.target.matches("button")) return;
   const { content, category } = eventsData;
+
+  if (!e.target.matches("button")) return;
   const target = e.target;
+
   const { id, interaction, template } = e.target.dataset;
+  
   appInteractions.setState(interaction, content.find((event) => event.id === id));
 
   if (target.matches('.heart')) {
@@ -88,9 +94,9 @@ function handleInteractionsButton(e) {
       ? interactionFunctions[template](id) : templates.intitial(id);
   }
 
-  if(target.matches('.remove') && !galleryHome) {
+  if (target.matches('.remove') && !galleryHome) {
     const data = appInteractions.getState()[category]
-    
+
     renderGallery({ data, category })
   }
 }
@@ -100,8 +106,10 @@ async function getTabCategory(category) {
   eventsData['content'] = data;
   eventsData['category'] = category;
 
+  galleryContainer = document.querySelector("#gallery");
   galleryContainer.addEventListener("click", handleInteractionsButton);
-  renderGallery({ data, category });
+
+  renderGallery({ data,  category });
 }
 
 export { getTabCategory, renderGallery };

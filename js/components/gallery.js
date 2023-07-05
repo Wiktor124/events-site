@@ -46,6 +46,8 @@ function handleInteraction() {
 let galleryContainer;
 function renderGallery({ data = [], category = '' }) {
 
+  if (data.length === 0) return galleryContainer.innerHTML = `<li>There's nothig to show in ${category}</li>`;
+
   galleryContainer.innerHTML = data
     ?.map(({ interaction, id, image, title, date, location: { address, city, state }, price }) => {
       price = Number(price) !== 0 ? `$${price.toFixed(2)}` : "Free";
@@ -72,11 +74,13 @@ function renderGallery({ data = [], category = '' }) {
 
 const eventsData = {}
 function handleInteractionsButton(e) {
+  const { content, category } = eventsData;
 
   if (!e.target.matches("button")) return;
-  const { content, category } = eventsData;
   const target = e.target;
+
   const { id, interaction, template } = e.target.dataset;
+  
   appInteractions.setState(interaction, content.find((event) => event.id === id));
 
   if (target.matches('.heart')) {
@@ -98,15 +102,14 @@ function handleInteractionsButton(e) {
 }
 
 async function getTabCategory(category) {
-  
   const data = await dynamic.getState().events?.[category];
   eventsData['content'] = data;
   eventsData['category'] = category;
+
   galleryContainer = document.querySelector("#gallery");
-  
   galleryContainer.addEventListener("click", handleInteractionsButton);
-  
-  renderGallery({ data, category }, galleryContainer);
+
+  renderGallery({ data,  category });
 }
 
 export { getTabCategory, renderGallery };

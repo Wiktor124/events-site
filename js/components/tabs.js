@@ -8,7 +8,8 @@ gallery.setAttribute('id', 'gallery')
 gallery.className = 'container error-container gallery home-gallery'
 
 const calendarContainer = document.createElement('div')
-calendarContainer.textContent = 'Soy calendar'
+calendarContainer.className = 'container'
+calendarContainer.textContent = "I'm calendar!";
 
 function renderTabs(categoires) {
   tabsContainer.innerHTML = categoires.map(({ label, category }) => {

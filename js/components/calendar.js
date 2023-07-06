@@ -1,5 +1,23 @@
 import { days, months } from "../config.js";
+import appInteractions from "../patterns/singleton.js";
+import formatDate from "../utils/format-date.js";
+
 const mainContainer = document.querySelector('.main-container');
+const daysNumber = [];
+const matchEventsWithCalendar = ({ monthLength, month, year }) => {
+  const regex = /^(\w+), (\w+) (\d+),/;
+
+  const appStateJoined = [].concat(...Object.values(JSON.parse(localStorage.getItem('appState')) || []))
+  
+  for (let i = 0; i < appStateJoined.length; i++) {
+    const [, eventDay, eventMonth, eventDayNumber ] = regex.exec(formatDate(appStateJoined[i].date));
+    
+    if(month === eventMonth && daysNumber.includes(Number(eventDayNumber))) {
+      // const eventData = appStateJoined.find(item => item.)
+      console.log(appStateJoined[i]);
+    }
+  }
+}
 
 const generateMonthDays = ({ year, month }) => {
   const firstDay = new Date(year, month, 1);
@@ -30,12 +48,14 @@ const generateMonthDays = ({ year, month }) => {
         if (date === today.getDate() && year === today.getFullYear() && month === today.getMonth()) {
           dayCell.classList.add("current-day");
         }
-
+        
+        daysNumber.push(date)
         date++;
       }
     }
   }
 
+  matchEventsWithCalendar({ monthLength: lastDay.getDate(), month: months[month], year })
   return daysList.outerHTML;
 }
 

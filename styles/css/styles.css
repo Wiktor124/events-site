@@ -207,4 +207,45 @@ img {
   padding: 0;
 }
 
+.calendar__month {
+  display: flex;
+  align-items: center;
+  width: 30%;
+  min-width: 325px;
+  margin: 0 auto;
+  justify-content: space-between;
+}
+.calendar__month-btn {
+  border-radius: 100%;
+  height: fit-content;
+  width: 30px;
+  height: 30px;
+}
+.calendar__prev-month {
+  background: url("../../assets/icons/calendar-left-arrow.svg") no-repeat center;
+}
+.calendar__next-month {
+  background: url("../../assets/icons/calendar-rigth-arrow.svg") no-repeat center;
+}
+.calendar__month-title {
+  margin: 30px 15px;
+}
+.calendar__list {
+  padding-top: 5px;
+  display: grid;
+  grid-template-columns: repeat(7, minmax(100px, 1fr));
+}
+.calendar__day {
+  border-top: 1px solid #e5e5e5;
+  border-right: 1px solid #e5e5e5;
+  height: 100px;
+}
+.calendar__day:nth-child(7n) {
+  border-right: none;
+}
+
+.current-day {
+  background-color: red;
+}
+
 /*# sourceMappingURL=styles.css.map */

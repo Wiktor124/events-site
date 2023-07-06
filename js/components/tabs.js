@@ -1,15 +1,13 @@
 import { getTabCategory } from "./gallery.js";
 import { interactionsCategories } from "../config.js";
+import intitCalendar from "./calendar.js"; "./calendar.js";
+
 const tabsContainer = document.querySelector("#tabs");
 const mainContainer = document.querySelector('.main-container');
 
 const gallery = document.createElement('ul');
-gallery.setAttribute('id', 'gallery')
-gallery.className = 'container error-container gallery home-gallery'
-
-const calendarContainer = document.createElement('div')
-calendarContainer.className = 'container'
-calendarContainer.textContent = "I'm calendar!";
+gallery.setAttribute('id', 'gallery');
+gallery.className = 'container error-container gallery home-gallery';
 
 function renderTabs(categoires) {
   tabsContainer.innerHTML = categoires.map(({ label, category }) => {
@@ -31,8 +29,8 @@ function handleTabs(e) {
   }
   target.setAttribute("class", "active");
 
-  if(category === interactionsCategories.calendar) {
-    mainContainer.innerHTML = calendarContainer.outerHTML;
+  if (category === interactionsCategories.calendar) {
+    intitCalendar();
   } else {
     getTabCategory(category);
     mainContainer.innerHTML = gallery.outerHTML;
@@ -48,6 +46,9 @@ function initTabs(categoiresTabs) {
     tabsContainer.addEventListener("click", handleTabs);
 
     getTabCategory(tabsContainer.firstChild.dataset.category);
+  } else {
+    // this should be remove
+    intitCalendar()
   }
 }
 export default initTabs;

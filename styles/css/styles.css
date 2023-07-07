@@ -5,6 +5,7 @@ body {
   padding: 0;
   font-family: "Roboto", sans-serif;
   background-color: #fdfefd;
+  position: relative;
 }
 
 h1 {
@@ -59,7 +60,7 @@ img {
 
 .header {
   background-color: #000;
-  padding-top: 70px;
+  padding-top: 45px;
 }
 .header__tabs {
   display: grid;
@@ -130,7 +131,7 @@ img {
   flex-grow: 1;
 }
 .gallery__text h3 {
-  margin-top: 30px;
+  margin-top: 1.875rem;
 }
 .gallery__text .date {
   color: #cf7556;
@@ -238,14 +239,68 @@ img {
 .calendar__day {
   border-top: 1px solid #e5e5e5;
   border-right: 1px solid #e5e5e5;
-  height: 100px;
+  min-height: 100px;
 }
 .calendar__day:nth-child(7n) {
   border-right: none;
 }
+.calendar__event-btn {
+  border: none;
+  display: block;
+  margin: 3px 5px;
+  border-radius: 5px;
+  padding: 5px 3px;
+}
+.calendar__event-text {
+  font-size: 0.6875rem;
+}
+.calendar__event-pink {
+  background-color: #f49de6;
+}
+.calendar__event-yellow {
+  background-color: #e8fd67;
+}
+.calendar__event-green {
+  background-color: #3eee85;
+}
 
 .current-day {
-  background-color: red;
+  font-weight: bolder;
+  font-size: 20px;
+  color: #1192ae;
+}
+
+.event-modal {
+  position: absolute;
+  background: rgba(0, 0, 0, 0.7254901961);
+  inset: 0;
+}
+.event-modal__card {
+  width: 250px;
+  position: absolute;
+  height: fit-content;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #fff;
+}
+.event-modal__text {
+  background-color: #fff;
+  padding: 0 10px 10px 10px;
+  font-weight: 500;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+.event-modal__text h3 {
+  margin-top: 1.875rem;
+}
+.event-modal__text .date {
+  color: #cf7556;
+}
+.event-modal__text > :not(.date):not(h3) {
+  color: rgba(0, 0, 0, 0.6235294118);
 }
 
 /*# sourceMappingURL=styles.css.map */

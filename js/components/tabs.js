@@ -47,7 +47,6 @@ function initTabs(categoiresTabs) {
 
     getTabCategory(tabsContainer.firstChild.dataset.category);
   } else {
-    // this should be remove
     intitCalendar()
   }
 }

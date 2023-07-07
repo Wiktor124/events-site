@@ -1,20 +1,38 @@
-import { days, months } from "../config.js";
-import appInteractions from "../patterns/singleton.js";
+import { days, interactionsCategories, months } from "../config.js";
 import formatDate from "../utils/format-date.js";
-
+const appStateJoined = [].concat(...Object.values(JSON.parse(localStorage.getItem('appState')) || []))
 const mainContainer = document.querySelector('.main-container');
-const daysNumber = [];
-const matchEventsWithCalendar = ({ monthLength, month, year }) => {
-  const regex = /^(\w+), (\w+) (\d+),/;
 
-  const appStateJoined = [].concat(...Object.values(JSON.parse(localStorage.getItem('appState')) || []))
-  
-  for (let i = 0; i < appStateJoined.length; i++) {
-    const [, eventDay, eventMonth, eventDayNumber ] = regex.exec(formatDate(appStateJoined[i].date));
-    
-    if(month === eventMonth && daysNumber.includes(Number(eventDayNumber))) {
-      // const eventData = appStateJoined.find(item => item.)
-      console.log(appStateJoined[i]);
+const matchEventsWithCalendar = ({  month, year }, dayList) => {
+  const cellDays = dayList.querySelectorAll('li');
+  const dateRegex = /^(\w+), (\w+) (\d+),/;
+
+  const appStateCopy = appStateJoined.map((item) => {
+    const copy = { ...item };
+    copy.date = dateRegex.exec(formatDate(item.date));
+    return copy;
+  }).filter((item) => item.date[2] === month);
+
+  for (const day of cellDays) {
+    const dayNumber = day.textContent;
+
+    if (dayNumber !== '' && year === (new Date().getFullYear())) {
+
+      appStateCopy.some((event) => {
+        if (event.date[3] === dayNumber) {
+          const eventColor = (event.interaction === interactionsCategories.favorites)
+            ? "pink" : (event.interaction === interactionsCategories.interested) ? "yellow" : "green";
+
+          const eventDay = document.createElement('button')
+          eventDay.setAttribute('data-id', event.id)
+          eventDay.setAttribute('data-interaction', event.interaction)
+
+          eventDay.className = `event-btn calendar__event-btn calendar__event-${eventColor}`
+          eventDay.innerHTML = `<span class="event-btn calendar__event-text" data-id="${event.id}" data-interaction="${event.interaction}">${event.title}</span>`
+
+          day.appendChild(eventDay)
+        }
+      });
     }
   }
 }
@@ -48,14 +66,12 @@ const generateMonthDays = ({ year, month }) => {
         if (date === today.getDate() && year === today.getFullYear() && month === today.getMonth()) {
           dayCell.classList.add("current-day");
         }
-        
-        daysNumber.push(date)
         date++;
       }
     }
   }
+  matchEventsWithCalendar({ month: months[month], year }, daysList)
 
-  matchEventsWithCalendar({ monthLength: lastDay.getDate(), month: months[month], year })
   return daysList.outerHTML;
 }
 
@@ -70,7 +86,7 @@ function renderCalendar({ year, month }) {
   `;
 
   const daysContainer = document.createElement('ul');
-  daysContainer.className = 'calendar__list'
+  daysContainer.className = 'calendar__list calendar__days-container'
   daysContainer.innerHTML = days.map(({ label }) => `<li>${label}</li>`).join('');
 
   const calendarContainer = `
@@ -84,10 +100,34 @@ function renderCalendar({ year, month }) {
   mainContainer.innerHTML = calendarContainer;
 }
 
+function renderEventModal({ eventData }) {
+  const { image, title, price, date, location: { address, city, state } } = eventData;
+  document.body.style.overflow = 'hidden';
+
+
+  let eventPrice = Number(price) !== 0 ? `$${price.toFixed(2)}` : "Free";
+  const eventModal = document.createElement('div')
+  eventModal.className = 'event-modal';
+
+  eventModal.innerHTML = `
+    <div class="event-modal__card ">
+      <img src="${image}" alt="${title}"/> 
+      <div class="event-modal__text">
+        <h3>${title}</h3>
+        <p class="date">${formatDate(new Date(date))}.</p>
+        <p>${address} • ${city}, ${state}.</p>
+        <strong>${eventPrice}</strong>
+      </div>
+    </div>
+  `;
+
+  mainContainer.appendChild(eventModal)
+}
+
 const currentDate = new Date();
 function handleCalendarButtons(e) {
   const target = e.target;
-  if (!target.matches('button')) return;
+  if (!target.matches('button') && !target.matches('.event-btn') && !target.matches('.event-modal')) return;
 
   if (target.matches('#prev-month')) {
     const currentMonth = currentDate.getMonth();
@@ -101,6 +141,17 @@ function handleCalendarButtons(e) {
     currentDate.setMonth(currentMonth + 1);
 
     renderCalendar({ month: currentDate.getMonth(), year: currentDate.getFullYear() })
+  }
+
+  if (target.matches('.event-btn')) {
+
+    const eventData = appStateJoined.find(item => item.id === target.dataset.id && item.interaction === target.dataset.interaction)
+    renderEventModal({ eventData });
+  }
+
+  if (target.matches('.event-modal')) {
+    document.body.style.overflow = 'auto';
+    mainContainer.removeChild(document.querySelector('.event-modal'));
   }
 }
 

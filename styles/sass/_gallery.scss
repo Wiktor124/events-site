@@ -1,3 +1,5 @@
+@import './card-styles';
+
 .gallery {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(200px, .5fr));
@@ -18,24 +20,7 @@
   }
 
   &__text {
-    padding: 0 10px 10px 10px;
-    font-weight: 500;
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    flex-grow: 1;
-
-    h3 {
-      margin-top: 30px;
-    }
-
-    .date {
-      color: $orage;
-    }
-
-    & > :not(.date):not(h3) {
-      color: #0000009f;
-    }
+    @include card-styles;
   }
 
   .event__info {
@@ -43,7 +28,6 @@
   }
 
   .check {
-    // display: inline-block;
     border-radius: 50%;
     background-color: green;
     padding: 0 2.5px;
@@ -61,7 +45,6 @@ $size: 55px;
 
 .heart{
   position: absolute;
-  // top: -55px;
   top: -25px;
   right: 20px;
   width: $size;

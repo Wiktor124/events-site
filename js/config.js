@@ -34,18 +34,18 @@ const interactionsCategories = {
 };
 
 const interactionsTabs = [
-  // {
-  //   label: "Favorites",
-  //   category: interactionsCategories.favorites
-  // },
-  // {
-  //   label: "Interested",
-  //   category: interactionsCategories.interested,
-  // },
-  // {
-  //   label: "Going",
-  //   category: interactionsCategories.going,
-  // },
+  {
+    label: "Favorites",
+    category: interactionsCategories.favorites
+  },
+  {
+    label: "Interested",
+    category: interactionsCategories.interested,
+  },
+  {
+    label: "Going",
+    category: interactionsCategories.going,
+  },
   {
     label: "Calendar",
     category: interactionsCategories.calendar,

@@ -1,5 +1,4 @@
 .calendar {
-
   &__month {
     display: flex;
     align-items: center;
@@ -38,15 +37,39 @@
   &__day {
     border-top: 1px solid #e5e5e5;
     border-right: 1px solid #e5e5e5;
-    height: 100px;
+    min-height: 100px;
   }
 
   &__day:nth-child(7n) {
     border-right: none;
   }
 
+  &__event-btn {
+    border: none;
+    display: block;
+    margin: 3px 5px;
+    border-radius: 5px;
+    padding: 5px 3px;
+  }
+
+  &__event-text {
+    font-size: .6875rem;
+  }
+  
+  &__event-pink {
+    background-color: $pink;
+  }
+  &__event-yellow {
+    background-color: $yellow;
+  }
+  &__event-green {
+    background-color: $green;
+  }
+
 }
 
 .current-day {
-  background-color: red;
+  font-weight: bolder;
+  font-size: 20px;
+  color: $blue;
 }

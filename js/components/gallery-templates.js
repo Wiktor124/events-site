@@ -1,6 +1,6 @@
 import { interactionsCategories } from "../config.js";
 
-const endPoint = new webkitURL(window.location).pathname.replace(/^\/|\.html$/g, "");
+// const endPoint = new webkitURL(window.location).pathname.replace(/^\/|\.html$/g, "");
 const { favorites, interested, going, remove } = interactionsCategories;
 
 const templates = {
@@ -37,7 +37,7 @@ const templates = {
 };
 
 function generateInteractionsButtons(interaction, id, category) {
-  if (endPoint === "account") {
+  if (document.querySelector('.account-container')) {
     return `
       <p>
         Not ${interaction} anymore?

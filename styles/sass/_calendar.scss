@@ -1,0 +1,75 @@
+.calendar {
+  &__month {
+    display: flex;
+    align-items: center;
+    width: 30%;
+    min-width: 325px;
+    margin: 0 auto;
+    justify-content: space-between;
+  }
+
+  &__month-btn {
+    border-radius: 100%;
+    height: fit-content;
+
+    width: 30px;
+    height: 30px;
+  }
+  
+  &__prev-month {
+    background: url("../../assets/icons/calendar-left-arrow.svg") no-repeat center;
+  }
+
+  &__next-month {
+    background: url("../../assets/icons/calendar-rigth-arrow.svg") no-repeat center;
+  }
+
+  &__month-title {
+    margin: 30px 15px;
+  }
+  
+  &__list {
+    padding-top: 5px;
+    display: grid;
+    grid-template-columns: repeat(7, minmax(100px, 1fr));
+  }
+
+  &__day {
+    border-top: 1px solid #e5e5e5;
+    border-right: 1px solid #e5e5e5;
+    min-height: 100px;
+  }
+
+  &__day:nth-child(7n) {
+    border-right: none;
+  }
+
+  &__event-btn {
+    border: none;
+    display: block;
+    margin: 3px 5px;
+    border-radius: 5px;
+    padding: 5px 3px;
+  }
+
+  &__event-text {
+    font-size: .6875rem;
+  }
+  
+  &__event-pink {
+    background-color: $pink;
+  }
+  &__event-yellow {
+    background-color: $yellow;
+  }
+  &__event-green {
+    background-color: $green;
+  }
+
+}
+
+.current-day {
+  font-weight: bolder;
+  font-size: 20px;
+  color: $blue;
+}

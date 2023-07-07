@@ -1,0 +1,22 @@
+@import './card-styles';
+
+.event-modal {
+  position: absolute;
+  background: #000000b9;
+  inset: 0;
+
+  &__card {
+    width: 250px;
+    position: absolute;
+    height: fit-content;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: $white;
+  }
+
+  &__text {
+    background-color: $white;
+    @include card-styles;
+  }
+}

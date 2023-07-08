@@ -1,20 +1,13 @@
 {
-  "name": "Events Site",
+  "name": "events-site",
   "version": "1.0.0",
-  "description": "",
+  "description": "* You should run the next command to watch css styles 1. npm run sass",
   "main": "index.js",
   "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
     "sass": "sass --watch styles/sass:styles/css"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/Wiktor124/proyecto1-hoteles-final-lll.git"
-  },
   "keywords": [],
-  "author": "Víctor Peña",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/Wiktor124/proyecto1-hoteles-final-lll/issues"
-  },
-  "homepage": "https://github.com/Wiktor124/proyecto1-hoteles-final-lll#readme"
+  "author": "",
+  "license": "ISC"
 }

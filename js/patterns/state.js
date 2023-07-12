@@ -1,13 +1,14 @@
 import { interactionsCategories } from "../config.js";
+
 let state = {};
 
-const appInteractions = {
+const appState = {
   getState() {
     return JSON.parse(localStorage.getItem("appState")) || {};
   },
 
   setState(interactionKey, data) {
-    const currentState = this.getState();
+    const currentState = getState()
     const existingCategory = currentState[interactionKey] || [];
     const isDuplicate = existingCategory.some((item) => item.id === data.id);
 
@@ -31,10 +32,10 @@ const appInteractions = {
     }
 
     currentState[interactionKey] = existingCategory;
-    state = { ...this.getState(), ...currentState };
+    state = { ...getState(), ...currentState };
     localStorage.setItem("appState", JSON.stringify(state));
   },
 };
-Object.freeze(appInteractions);
+const { getState, setState } = Object.freeze(appState);
 
-export default appInteractions;
+export { getState, setState };

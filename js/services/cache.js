@@ -1,7 +1,7 @@
 import fetchEventsByCategories from "./api.js";
 const cache = {};
 
-const cacheProxyCategories = new Proxy(cache, {
+const eventsCache = new Proxy(cache, {
   get: async (target, property) => {
     if (property in target) {
       return target[property];
@@ -14,6 +14,5 @@ const cacheProxyCategories = new Proxy(cache, {
   }
 });
 
-export { cacheProxyCategories }
-
+export default eventsCache;
 

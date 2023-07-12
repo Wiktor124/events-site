@@ -1,6 +1,6 @@
 import formatDate from "../utils/format-date.js";
 import autoGalleryContainerHeight from "../utils/auto-height-node.js";
-import appInteractions from "../patterns/singleton.js";
+import { getState, setState } from "../patterns/state.js";
 import dynamic from "../patterns/dynamic-data.js";
 import { generateInteractionsButtons, templates } from "./gallery-templates.js";
 
@@ -81,7 +81,7 @@ function handleInteractionsButton(e) {
 
   const { id, interaction, template } = e.target.dataset;
   
-  appInteractions.setState(interaction, content.find((event) => event.id === id));
+  setState(interaction, content.find((event) => event.id === id));
 
   if (target.matches('.heart')) {
     target.classList.toggle('heart-blue');
@@ -95,7 +95,7 @@ function handleInteractionsButton(e) {
   }
 
   if (target.matches('.remove') && !galleryHome) {
-    const data = appInteractions.getState()[category]
+    const data = getState()[category]
 
     renderGallery({ data, category })
   }

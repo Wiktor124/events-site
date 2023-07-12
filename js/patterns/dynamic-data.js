@@ -1,13 +1,13 @@
 let state;
 
 const dynamic = {
-  getState() {
+  getData() {
     return { ...state }
   },
-  setState(newState) {
+  setNewData(newState) {
     state = { events: newState}
   }
 }
-Object.freeze(dynamic)
+const { getData, setNewData } = Object.freeze(dynamic)
 
-export default dynamic;
+export { getData, setNewData };

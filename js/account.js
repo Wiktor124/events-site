@@ -1,8 +1,9 @@
 import { interactionsTabs } from "./config.js";
 import initTabs from "./components/tabs.js";
-import dynamic from "./patterns/dynamic-data.js";
+import { setNewData } from "./patterns/dynamic-data.js";
+import { getState  } from "./patterns/state.js";
 
 window.onload = () => {
-  dynamic.setState(JSON.parse(localStorage.getItem('appState')))
+  setNewData(getState())
   initTabs(interactionsTabs);  
 }

@@ -1,10 +1,10 @@
 import { interactionsCategories } from "../config.js";
+import formatDate from "../utils/format-date.js";
 
-// const endPoint = new webkitURL(window.location).pathname.replace(/^\/|\.html$/g, "");
 const { favorites, interested, going, remove } = interactionsCategories;
 
 const templates = {
-  going: (id) =>{
+  going: (id) => {
     return `
     <span class="check">✔</span>
 
@@ -15,7 +15,7 @@ const templates = {
     `;
   },
 
-  interested: (id) =>{
+  interested: (id) => {
     return `
       <div>
         <p>You're interested in going.</p>
@@ -46,8 +46,24 @@ function generateInteractionsButtons(interaction, id, category) {
       
     `;
   }
-  
+
   return templates.intitial(id);
 }
 
-export { generateInteractionsButtons, templates, };
+const card = ({ title, image, date, address, city, state, price }, { interaction, id, category }) => {
+
+  return `
+    <img src="${image}" alt="${title}"/>
+    <div class="gallery__text">
+      <div class="event__info">
+        <h3>${title}</h3>
+        <p class="date">${formatDate(new Date(date))}.</p>
+        <p>${address} • ${city}, ${state}.</p>
+        <strong>${price}</strong>
+      </div>
+      <div class="interactions-container" data-id="${id}">${generateInteractionsButtons(interaction, id, category)}</div>
+    </div>
+  `;
+}
+
+export { card, templates };

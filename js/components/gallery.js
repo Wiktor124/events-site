@@ -1,8 +1,7 @@
-import formatDate from "../utils/format-date.js";
 import autoGalleryContainerHeight from "../utils/auto-height-node.js";
 import { getState, setState } from "../patterns/state.js";
-import dynamic from "../patterns/dynamic-data.js";
-import { generateInteractionsButtons, templates } from "./gallery-templates.js";
+import { getData, setNewData } from "../patterns/dynamic-data.js";
+import { card, templates } from "./card.js";
 
 const appState = JSON.parse(localStorage.getItem('appState')) || [];
 const galleryHome = document.querySelector('.home-gallery');
@@ -54,16 +53,7 @@ function renderGallery({ data = [], category = '' }) {
 
       return `
       <li class="gallery__card">
-        <img src="${image}" alt="${title}"/>
-        <div class="gallery__text">
-          <div class="event__info">
-            <h3>${title}</h3>
-            <p class="date">${formatDate(new Date(date))}.</p>
-            <p>${address} • ${city}, ${state}.</p>
-            <strong>${price}</strong>
-          </div>
-          <div class="interactions-container" data-id="${id}">${generateInteractionsButtons(interaction, id, category)}</div>
-        </div>
+       ${card({ title, image, date, address, city, state, price }, { interaction, id, category })}
       </li>
     `;
     }).join("");
@@ -102,7 +92,7 @@ function handleInteractionsButton(e) {
 }
 
 async function getTabCategory(category) {
-  const data = await dynamic.getState().events?.[category];
+  const data = await getData().events?.[category];
   eventsData['content'] = data;
   eventsData['category'] = category;
 

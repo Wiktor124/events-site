@@ -1,6 +1,7 @@
-import { getTabCategory } from "./gallery.js";
+import { getTabCategory, renderGallery } from "./gallery.js";
 import { interactionsCategories } from "../config.js";
-import intitCalendar from "./calendar.js"; "./calendar.js";
+import intitCalendar from "./calendar.js";
+import { getState } from "../patterns/state.js";
 
 const tabsContainer = document.querySelector("#tabs");
 const mainContainer = document.querySelector('.main-container');
@@ -33,6 +34,12 @@ function handleTabs(e) {
     intitCalendar();
   } else {
     getTabCategory(category);
+    // console.log(getState());
+    console.log(category);
+    const data = getState()[category];
+    console.log(data);
+    renderGallery({ data, category })
+    
     mainContainer.innerHTML = gallery.outerHTML;
   }
 }

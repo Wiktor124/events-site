@@ -34,10 +34,7 @@ function handleTabs(e) {
     intitCalendar();
   } else {
     getTabCategory(category);
-    // console.log(getState());
-    console.log(category);
     const data = getState()[category];
-    console.log(data);
     renderGallery({ data, category })
     
     mainContainer.innerHTML = gallery.outerHTML;
@@ -57,4 +54,5 @@ function initTabs(categoiresTabs) {
     intitCalendar()
   }
 }
+
 export default initTabs;

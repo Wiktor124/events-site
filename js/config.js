@@ -84,57 +84,6 @@ const days = Object.freeze([
   }
 ]);
 
-// const months = Object.freeze([
-//   {
-//     label: 'january',
-//     month: 'January'
-//   },
-//   {
-//     label: 'february',
-//     month: 'February'
-//   },
-//   {
-//     label: 'march',
-//     month: 'March'
-//   },
-//   {
-//     label: 'april',
-//     month: 'April'
-//   },
-//   {
-//     label: 'may',
-//     month: 'May'
-//   },
-//   {
-//     label: 'june',
-//     month: 'June'
-//   },
-//   {
-//     label: 'july',
-//     month: 'July'
-//   },
-//   {
-//     label: 'august',
-//     month: 'August'
-//   },
-//   {
-//     label: 'september',
-//     month: 'September'
-//   },
-//   {
-//     label: 'october',
-//     month: 'October'
-//   },
-//   {
-//     label: 'november',
-//     month: 'November'
-//   },
-//   {
-//     label: 'december',
-//     month: 'December'
-//   }
-// ]);
-
 const months = Object.freeze([
   'January',
   'February',
@@ -149,6 +98,5 @@ const months = Object.freeze([
   'November',
   'December'
 ]);
-
 
 export { homeTabs, interactionsTabs, interactionsCategories, days, months };

@@ -1,9 +1,11 @@
 import { days, interactionsCategories, months } from "../config.js";
+import { getState } from "../patterns/state.js";
 import formatDate from "../utils/format-date.js";
-const appStateJoined = [].concat(...Object.values(JSON.parse(localStorage.getItem('appState')) || []))
 const mainContainer = document.querySelector('.main-container');
 
+let appStateJoined;
 const matchEventsWithCalendar = ({  month, year }, dayList) => {
+  appStateJoined = [].concat(...Object.values(getState() || []));
   const cellDays = dayList.querySelectorAll('li');
   const dateRegex = /^(\w+), (\w+) (\d+),/;
 

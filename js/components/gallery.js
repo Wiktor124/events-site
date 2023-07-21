@@ -1,6 +1,6 @@
 import autoGalleryContainerHeight from "../utils/auto-height-node.js";
 import { getState, setState } from "../patterns/state.js";
-import { getData, setNewData } from "../patterns/dynamic-data.js";
+import { getData } from "../patterns/dynamic-data.js";
 import { card, templates } from "./card.js";
 
 const appState = JSON.parse(localStorage.getItem('appState')) || [];
@@ -70,7 +70,7 @@ function handleInteractionsButton(e) {
   const target = e.target;
 
   const { id, interaction, template } = e.target.dataset;
-  
+
   setState(interaction, content.find((event) => event.id === id));
 
   if (target.matches('.heart')) {
@@ -93,13 +93,18 @@ function handleInteractionsButton(e) {
 
 async function getTabCategory(category) {
   const data = await getData().events?.[category];
+
   eventsData['content'] = data;
   eventsData['category'] = category;
 
   galleryContainer = document.querySelector("#gallery");
   galleryContainer.addEventListener("click", handleInteractionsButton);
 
-  renderGallery({ data,  category });
+  if (document.querySelector('.account-container')) {
+    return renderGallery({ data: getState()[category], category });
+  }
+
+  renderGallery({ data, category });
 }
 
 export { getTabCategory, renderGallery };
